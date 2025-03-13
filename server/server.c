@@ -16,12 +16,12 @@ struct Server* server_constructor(int domain, int protocol, int service, unsigne
 
     server->socket = socket(domain, service, protocol);
 
-    if(server->socket == 0){
+    if(server->socket < 0){
         perror("Failed to connect to socket...\n");
         exit(1);
     }
 
-    if(bind(server->socket,(struct sockaddr*)&server->address, sizeof(server->address))<0){
+    if(bind(server->socket,(struct sockaddr*)&server->address, (socklen_t)sizeof(server->address))<0){
         perror("Failed to BIND socket.....\n");
         exit(1);
     }
